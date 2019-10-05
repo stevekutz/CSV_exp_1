@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Button, Container} from 'semantic-ui-react';
+import CSVReader from 'react-csv-reader';
+
 
 function App() {
+ const [infoCSV, setInfoCSV] = useState([ ]);
+
+  const handleData = data => {
+    console.log('data is ', data);
+    setInfoCSV(data);
+  }
+
+  console.log('CSV info >>> ', infoCSV);
+  // console.log('CSV info >>> ', infoCSV);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <Container>
+        <CSVReader
+          label = 'Choose your CSV file'
+          onFileLoaded = {handleData}
+        />
+      
+      </Container>
+
+
     </div>
   );
 }
