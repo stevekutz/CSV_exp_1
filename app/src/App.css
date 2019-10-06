@@ -17,6 +17,28 @@
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.csv-reader-input {
+  border: 1px solid deeppink;
+  color: dodgerblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.csv-input{
+  border: 1px solid green;
+  color: orange;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  padding: 4px;
+}
+
+#ObiWan{
+  color: red;
 }
