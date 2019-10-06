@@ -39,6 +39,16 @@
   padding: 4px;
 }
 
-#ObiWan{
-  color: red;
+.csv-input:hover{
+  color: pink;
+
+}
+
+input:hover{
+  color: pink;
+
+}
+
+#CSVstyling{
+  color: pink;
 }
