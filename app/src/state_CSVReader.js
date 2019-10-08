@@ -33,18 +33,20 @@ class State_CSVReader extends React.Component {
     render() {
       
         return (
-          <div >
+            <div >
+            {this.state.dataCSV.length ? <p> Length is {this.state.dataCSV.length} </p> : <p> No data yet </p> }
             <Container  >
               <CSVReader
-                label = 'Choose your CSV file'
-                // onFileLoaded = {handleData}  does not immediately update state
-                  onFileLoaded = { (data) => {
+                label = 'Stateful-Choose your CSV file'
+                //    onFileLoaded = {this.handleData(data)}  NOT working
+
+                onFileLoaded = { (data) => {
                     this.handleData(data)
                     console.log('anonymous func set infoCSV >>> ', this.state.dataCSV);
-                    // at timeout here ?
                   // this.handleData(this.state.infoCSV);
-             
+                    
                 } }
+                
                 onError = {this.handleError}
                 inputId="CSVstyling"
                 inputStyle={{border: '1px solid blue', color: 'deeppink'}}
@@ -54,7 +56,9 @@ class State_CSVReader extends React.Component {
             </Container>
       
             <input type="color" id="head" name="head" readOnly value="#e66465"/>
-      
+             
+           
+           
 
       
           </div>
