@@ -5,17 +5,19 @@ import Loader from 'react-loader-spinner';
 
 function Hooks_CSVReader() {
  const [infoCSV, setInfoCSV] = useState([]);
+ const [loadingData, setLoading] = useState(false);
 
-  const handleData = () => {
-    // console.log('data is ', data);
-    // setInfoCSV(data);
-    
+  const handleData = (data) => {
+
+    setLoading(true);    
     setTimeout( ()=> {
       console.log('inside setTimeout');
       console.log('inside setTimeout infoCSV >>> ', infoCSV);
+      setInfoCSV(data)
+      showData(infoCSV); // Renders immediat
+      setLoading(false);  
     }, 2000);
-    showData(infoCSV); // does not
-    console.log('inside handler infoCSV >>> ', infoCSV);
+    
   }
 
   const handleError = (err) => {
@@ -37,10 +39,10 @@ function Hooks_CSVReader() {
           label = 'Hooks-Choose your CSV file'
           // onFileLoaded = {handleData}  doesnot immediately update state
             onFileLoaded = { (data) => {
-            setInfoCSV(data)
+           // setInfoCSV(data)
             console.log('anonymous func set infoCSV >>> ', infoCSV);
             // at timeout here ?
-            handleData(infoCSV);
+            handleData(data);
        
           } }
           onError = {handleError}
@@ -54,6 +56,14 @@ function Hooks_CSVReader() {
       <input type="color" id="head" name="head" readOnly value="#e66465"/>
 
       <div style = {{ border: '1px solid red', display: 'flex', width: '100%', justifyContent: 'center'}}>
+      
+      {loadingData 
+        ? 
+            <Loader style = {{border: '1px solid blue', display: 'flex', justifyContent: 'center'}}
+                    width = {25} height= {25} color = 'purple' type = 'TailSpin'/> 
+        : null
+    }
+      
       {infoCSV.length 
         ? 
         <Container>
@@ -72,7 +82,7 @@ function Hooks_CSVReader() {
             )}
         </Container>
         : 
-          <Loader width = {25} height= {25} type = 'Grid'/> 
+          null 
           
       }
       </div>
