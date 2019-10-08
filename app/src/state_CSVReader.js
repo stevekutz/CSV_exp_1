@@ -9,18 +9,13 @@ class State_CSVReader extends React.Component {
     }
 
     handleData = (data) => {
-        this.setState(prevState => {
+        this.setState(() => {
             return {dataCSV: data}
         })
     
         console.log('inside handler infoCSV >>> ', this.state.dataCSV);
-
-        // setTimeout( ()=> {
-        //     console.log('inside setTimeout');
-        //     console.log('inside setTimeout infoCSV >>> ', this.state.dataCSV);
-        //     }, 2000);
-        this.showData(this.state.dataCSV); // does not
-         console.log('inside handler infoCSV >>> ', this.state.dataCSV);
+        this.showData(this.state.dataCSV);
+         console.log('inside handler infoCSV again >>> ', this.state.dataCSV);
     }
 
     handleError = (err) => {
@@ -34,7 +29,27 @@ class State_CSVReader extends React.Component {
       
         return (
             <div >
-            {this.state.dataCSV.length ? <p> Length is {this.state.dataCSV.length} </p> : <p> No data yet </p> }
+            {this.state.dataCSV.length 
+                ? 
+                <div>
+                    <p> Length is {this.state.dataCSV.length} </p> 
+                <Container>    
+                    {this.state.dataCSV.map(item => 
+                    <ul key = {item[0]}>
+                        <li>{item[0]}</li>
+                        <li>{item[1]}</li>
+                        <li>{item[2]}</li>
+                        <li>{item[3]}</li>
+                        <li>{item[4]}</li>
+                    
+                    </ul>
+                    )}
+                </Container>      
+
+                </div>
+                
+                
+                : <p> No data yet </p> }
             <Container  >
               <CSVReader
                 label = 'Stateful-Choose your CSV file'
