@@ -6,12 +6,24 @@ import Loader from 'react-loader-spinner';
 class State_CSVReader extends React.Component {
     state = {
         dataCSV: [],
+        loadingData: false,
     }
 
     handleData = (data) => {
-        this.setState(() => {
-            return {dataCSV: data}
-        })
+        
+        this.setState({loadingData: true});
+
+        setTimeout(()=> {
+            console.log("TIMEOUT going now");
+            this.setState(() => {
+                return {dataCSV: data, loadingData: false}
+            })
+        }, 3000);
+        
+        
+        // this.setState(() => {
+        //     return {dataCSV: data}
+        // })
     
         console.log('inside handler infoCSV >>> ', this.state.dataCSV);
         this.showData(this.state.dataCSV);
@@ -49,7 +61,16 @@ class State_CSVReader extends React.Component {
                 </div>
                 
                 
-                : <p> No data yet </p> }
+                : <p> No data yet </p> 
+            }
+            {this.state.loadingData 
+                ? 
+                    <Loader style = {{border: '1px solid blue', display: 'flex', justifyContent: 'center'}}
+                            width = {25} height= {25} color = 'pink' type = 'TailSpin'/> 
+                : null
+            }
+            
+            
             <Container  >
               <CSVReader
                 label = 'Stateful-Choose your CSV file'
@@ -82,29 +103,3 @@ class State_CSVReader extends React.Component {
 }
 
 export default State_CSVReader;
-
-/*
-            <div style = {{ border: '1px solid red', display: 'flex', width: '100%', justifyContent: 'center'}}>
-            {this.state.dataCSV.length > 1
-              ? 
-              <Container>
-                <p>length is {this.state.dataCSV.length}</p>
-                
-                
-                {this.dataCSV.map(item => 
-                  <ul key = {item[0]}>
-                    <li>{item[0]}</li>
-                    <li>{item[1]}</li>
-                    <li>{item[2]}</li>
-                    <li>{item[3]}</li>
-                    <li>{item[4]}</li>
-                  
-                  </ul>
-                  )}
-              </Container>
-              : 
-                <Loader width = {25} height= {25} type = 'Grid'/> 
-                
-            }
-            </div>
-*/
