@@ -3,13 +3,13 @@ import {Button, Container} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
- const fieldsByIndex = {};
+ // const fieldsByIndex = {};
  // const fieldNames = ['label', 'country'];   
 
 function Hooks_CSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
   const [loadingData, setLoading] = useState(false);
-  // const [fieldsByIndex, setFieldsByIndex] = useState({});
+   const [fieldsByIndex, setFieldsByIndex] = useState({});
    const [fieldNames, setFieldNames] = useState(['label', 'country']);
 
  const handleData = (data) => {
@@ -37,7 +37,7 @@ function Hooks_CSVReader() {
        }
     
       const findFieldIndex = (arr, fieldName) => {
-        if(arr.length>0) {
+        if(arr.length) {
          // let titleBar = ["label", "population", "country", "x", "y"];
           let titleBar = arr[0];
           console.log('titleBar is ', titleBar );
@@ -53,16 +53,19 @@ function Hooks_CSVReader() {
     
       const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
         fieldNames.forEach(element => {
-            // console.log('current element is >> ', element);
-             fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
-            //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
-             console.log('Scrub FBI   ',fieldsByIndex);
+            if(infoCSV.length) {
+              // console.log('current element is >> ', element);
+               fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
+               // let tempIndex = findFieldIndex(infoCSV, element); // NEED THIS, below not viable
+              //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
+              //setFieldsByIndex({...fieldsByIndex , [element] : tempIndex  })
+               console.log('Scrub FBI   ',fieldsByIndex);
+            }
         }); 
     
       }
-      showData(infoCSV);
-      scrubCSV(fieldsByIndex, infoCSV, fieldNames)
-      console.log('>> FBI >> ', fieldsByIndex);
+      //showData(infoCSV);
+      scrubCSV(fieldsByIndex, infoCSV, fieldNames);
 
   }, [infoCSV])
 
@@ -71,12 +74,7 @@ function Hooks_CSVReader() {
       <Container  >
         <CSVReader
           label = 'Hooks-Choose your CSV file'
-          // onFileLoaded = {handleData}  doesnot immediately update state
-          onFileLoaded = { (data) => {
-            // setInfoCSV(data)
-            console.log('anonymous func set infoCSV >>> ', infoCSV);
-            handleData(data);
-              }}
+          onFileLoaded = { (data) => handleData(data)}
           onError = {handleError}
           inputId="CSVstyling"
           inputStyle={{border: '1px solid blue', color: 'deeppink'}}
@@ -100,7 +98,7 @@ function Hooks_CSVReader() {
         ? 
         <Container>
           <p>length is {infoCSV.length}</p>
-          {console.log('>> FBI inside >> ', fieldsByIndex)}
+          
           {infoCSV.map((item,id) => (
               <div key = {id}>
                 {item}  
