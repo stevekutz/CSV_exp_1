@@ -3,14 +3,20 @@ import {Button, Container} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
+
+
  // const fieldsByIndex = {};
  // const fieldNames = ['label', 'country'];   
+ //    const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName',	
+ // 'Studentemail', 'ParentLastName',	'ParentFirstName', 'ParentPhone',	'Parentemail']);
 
 function Hooks_CSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
   const [loadingData, setLoading] = useState(false);
    const [fieldsByIndex, setFieldsByIndex] = useState({});
-   const [fieldNames, setFieldNames] = useState(['label', 'country']);
+   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
+   const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName']);
+   const [newData, addNewData] = useState({});
 
  const handleData = (data) => {
     setLoading(true);    
@@ -54,7 +60,7 @@ function Hooks_CSVReader() {
       const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
         fieldNames.forEach(element => {
             if(infoCSV.length) {
-              // console.log('current element is >> ', element);
+             // console.log('current element is >> ', element);
                fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
                // let tempIndex = findFieldIndex(infoCSV, element); // NEED THIS, below not viable
               //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
@@ -62,10 +68,18 @@ function Hooks_CSVReader() {
                console.log('Scrub FBI   ',fieldsByIndex);
             }
         }); 
-    
       }
+
+      // const [newData, addNewData] = useState({});
+      // const dataPrep(fieldsByIndex) {
+      //   let newRow = {};
+
+
+      // }
+
       //showData(infoCSV);
       scrubCSV(fieldsByIndex, infoCSV, fieldNames);
+      
 
   }, [infoCSV])
 
