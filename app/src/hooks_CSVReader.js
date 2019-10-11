@@ -19,6 +19,8 @@ function Hooks_CSVReader() {
    const [newData, addNewData] = useState({});
 
  const handleData = (data) => {
+
+    setInfoCSV([]);
     setLoading(true);    
     setTimeout( ()=> {
       console.log('inside setTimeout');
@@ -62,17 +64,28 @@ function Hooks_CSVReader() {
             if(infoCSV.length) {
              // console.log('current element is >> ', element);
                fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
-               // let tempIndex = findFieldIndex(infoCSV, element); // NEED THIS, below not viable
+             
               //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
-              //setFieldsByIndex({...fieldsByIndex , [element] : tempIndex  })
+              
                console.log('Scrub FBI   ',fieldsByIndex);
             }
         }); 
       }
 
-      // const [newData, addNewData] = useState({});
-      // const dataPrep(fieldsByIndex) {
-      //   let newRow = {};
+        //  // Emulation
+        //  const [studentInfo, setStudentInfo] = useState({
+        //   first_name: "",
+        //   last_name: "",
+        //   parent_id: ""
+        // });
+
+
+      // // const [newData, addNewData] = useState({});
+      // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
+      //   for(let i = 1; i < infoCSV.length; i++) {
+      //     infoCSV[i]
+
+      //   }
 
 
       // }
