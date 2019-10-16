@@ -15,8 +15,20 @@ function Hooks_CSVReader() {
   const [loadingData, setLoading] = useState(false);
   const [fieldsByIndex, setFieldsByIndex] = useState({});
   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
-  const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName']);
-  const [newData, addNewData] = useState({});
+  const [fieldNames, setFieldNames] = useState([]);
+  
+
+  // fields that need to be gotten
+  const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
+  const FOUNDparent_id = "8b4eb7b4-893c-4bb2-8bbe-b75c4223854e";
+
+  // Default fields needed
+  const [newDataRow, updateNewDataRow] = useState({
+    first_name: '',
+    last_name: '',
+    school_id: USERschool_id,
+    parent_id: FOUNDparent_id,
+  });
 
   const school_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
   const parent_id = "8b4eb7b4-893c-4bb2-8bbe-b75c4223854e";
@@ -30,11 +42,14 @@ function Hooks_CSVReader() {
       console.log('inside setTimeout');
       console.log('inside setTimeout infoCSV >>> ', infoCSV);
       setInfoCSV(data)
+
     //   showData(infoCSV);
-    //   scrubCSV(fieldsByIndex, infoCSV, fieldNames)
-      setLoading(false);  
+    //  scrubCSV(fieldsByIndex, infoCSV, fieldNames)
+      setLoading(false); 
+     // setFieldNames(data[0]); 
     }, 2000);
     
+    setFieldNames(data[0]); 
     // showData(infoCSV);
     // scrubCSV(fieldsByIndex, infoCSV, fieldNames)
   }
@@ -44,14 +59,17 @@ function Hooks_CSVReader() {
   }
 
   
-  const findFieldIndex = (arr, fieldName) => {
+  const findFieldIndex = (arr, fieldName, fieldNames) => {
     if(arr.length) {
      
-      let titleBar = arr[0];
-      console.log('titleBar is ', titleBar );
+      // let titleBar = arr[0];
+      // console.log('titleBar is ', titleBar );
+      // setFieldNames(titleBar);
+      console.log('fieldnames in CSV are: ', fieldNames);
       let currentIndex = null;
       console.log('current fieldName', fieldName);
-      currentIndex = titleBar.indexOf(`${fieldName}`);
+   //   currentIndex = titleBar.indexOf(`${fieldName}`);
+      currentIndex = fieldNames.indexOf(`${fieldName}`);
       console.log('curentIndex ', currentIndex);
       return currentIndex;
       }
@@ -63,53 +81,53 @@ function Hooks_CSVReader() {
     fieldNames.forEach(element => {
         if(infoCSV.length) {
          // console.log('current element is >> ', element);
-           fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
+         fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element, fieldNames); // works
          
-          //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
-          
+         // setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  }) // nooo
+         // setFieldsByIndex( fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element)  ) // error on second run
            console.log('Scrub FBI   ',fieldsByIndex);
+
         }
     }); 
   }
+  
+  // const newStudentPayload = {
+  //   ...studentInfo,
+  //   field_trip_id: match.params.id,
+  //   school_id: user.school_id
+  // };
+
+  // const { first_name, last_name, field_trip_id, school_id, parent_id } = req.body;  
+  // const [newDataRow, updateNewDataRow] 
 
 
+  // // const [newData, addNewData] = useState({});
 
-  useEffect(() => {
-       const showData = info => {
-            console.log('showData info >>> ', info);
-       }
-    
-      scrubCSV(fieldsByIndex, infoCSV, fieldNames);
-      
-      
-      
-      // const newStudentPayload = {
-      //   ...studentInfo,
-      //   field_trip_id: match.params.id,
-      //   school_id: user.school_id
-      // };
+  // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
+  //   for(let i = 1; i < infoCSV.length; i++) {
+  //     infoCSV[i]
 
-        //  // Emulation
-        //  const [studentInfo, setStudentInfo] = useState({
-        //   first_name: "",
-        //   last_name: "",
-        //   parent_id: ""
-        // });
-      // const { first_name, last_name, field_trip_id, school_id, parent_id } = req.body;  
-
-      // // const [newData, addNewData] = useState({});
-      // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
-      //   for(let i = 1; i < infoCSV.length; i++) {
-      //     infoCSV[i]
-
-      //   }
+  //   }
 
 
-      // }
+  // }
 
-      //showData(infoCSV);
-      
+  //showData(infoCSV);
+  
 
+  const showData = info => {
+       console.log('showData info >>> ', info);
+  }
+
+  // useEffect(()=> {
+  //   console.log('getCSVfieldNames called');
+  //   getCSVfieldNames(infoCSV);
+  // }, [infoCSV] )
+
+  useEffect(() => {  
+    console.log('scrubCSV called');
+    // console.log('getCSVfieldNames shows', fieldNames); 
+      scrubCSV(fieldsByIndex, infoCSV, fieldNames);   
   }, [infoCSV])
 
   return (
