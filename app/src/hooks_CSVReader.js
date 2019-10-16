@@ -13,10 +13,14 @@ import Loader from 'react-loader-spinner';
 function Hooks_CSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
   const [loadingData, setLoading] = useState(false);
-   const [fieldsByIndex, setFieldsByIndex] = useState({});
-   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
-   const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName']);
-   const [newData, addNewData] = useState({});
+  const [fieldsByIndex, setFieldsByIndex] = useState({});
+  // const [fieldNames, setFieldNames] = useState(['label', 'country']);
+  const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName']);
+  const [newData, addNewData] = useState({});
+
+  const school_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
+  const parent_id = "8b4eb7b4-893c-4bb2-8bbe-b75c4223854e";
+
 
  const handleData = (data) => {
 
@@ -39,38 +43,51 @@ function Hooks_CSVReader() {
     console.log('Error msg is >>>>> ', err);
   }
 
+  
+  const findFieldIndex = (arr, fieldName) => {
+    if(arr.length) {
+     
+      let titleBar = arr[0];
+      console.log('titleBar is ', titleBar );
+      let currentIndex = null;
+      console.log('current fieldName', fieldName);
+      currentIndex = titleBar.indexOf(`${fieldName}`);
+      console.log('curentIndex ', currentIndex);
+      return currentIndex;
+      }
+    return -1;
+        
+  }
+
+  const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
+    fieldNames.forEach(element => {
+        if(infoCSV.length) {
+         // console.log('current element is >> ', element);
+           fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
+         
+          //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
+          
+           console.log('Scrub FBI   ',fieldsByIndex);
+        }
+    }); 
+  }
+
+
+
   useEffect(() => {
        const showData = info => {
             console.log('showData info >>> ', info);
        }
     
-      const findFieldIndex = (arr, fieldName) => {
-        if(arr.length) {
-         // let titleBar = ["label", "population", "country", "x", "y"];
-          let titleBar = arr[0];
-          console.log('titleBar is ', titleBar );
-          let currentIndex = null;
-          console.log('current fieldName', fieldName);
-          currentIndex = titleBar.indexOf(`${fieldName}`);
-          console.log('curentIndex ', currentIndex);
-          return currentIndex;
-          }
-        return -1;
-            
-      }
-    
-      const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
-        fieldNames.forEach(element => {
-            if(infoCSV.length) {
-             // console.log('current element is >> ', element);
-               fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element);
-             
-              //setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  })
-              
-               console.log('Scrub FBI   ',fieldsByIndex);
-            }
-        }); 
-      }
+      scrubCSV(fieldsByIndex, infoCSV, fieldNames);
+      
+      
+      
+      // const newStudentPayload = {
+      //   ...studentInfo,
+      //   field_trip_id: match.params.id,
+      //   school_id: user.school_id
+      // };
 
         //  // Emulation
         //  const [studentInfo, setStudentInfo] = useState({
@@ -78,7 +95,7 @@ function Hooks_CSVReader() {
         //   last_name: "",
         //   parent_id: ""
         // });
-
+      // const { first_name, last_name, field_trip_id, school_id, parent_id } = req.body;  
 
       // // const [newData, addNewData] = useState({});
       // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
@@ -91,7 +108,6 @@ function Hooks_CSVReader() {
       // }
 
       //showData(infoCSV);
-      scrubCSV(fieldsByIndex, infoCSV, fieldNames);
       
 
   }, [infoCSV])
