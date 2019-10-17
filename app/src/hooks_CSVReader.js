@@ -155,15 +155,15 @@ function Hooks_CSVReader() {
             : null
         }
       
-      {infoCSV.length 
+      {fieldNames.length 
         ? 
         <Container>
-          <p>length is {infoCSV.length}</p>
+          <p>length is {fieldNames.length}</p>
           
-          {infoCSV.map((item,id) => (
-              <div key = {id}>
+          {fieldNames.map((item,id) => (
+              <li key = {id}>
                 {item}  
-              </div>
+              </li>
           )          
             )}
         </Container>
