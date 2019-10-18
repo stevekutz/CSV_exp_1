@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container} from 'semantic-ui-react';
+import {Button, Container, Dropdown, Grid, Modal, Select} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
-
+const options = [
+  { key: 1, text: 'One', value: 1 },
+  { key: 2, text: 'Two', value: 2 },
+  { key: 3, text: 'Three', value: 3 },
+]
 
  // const fieldsByIndex = {};
  // const fieldNames = ['label', 'country'];   
@@ -16,7 +20,7 @@ function Hooks_CSVReader() {
   const [fieldsByIndex, setFieldsByIndex] = useState({});
   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
   const [fieldNames, setFieldNames] = useState([]);
-  
+  const [dropdownSelected, addDropDownSelected] = useState(['default']);
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -77,6 +81,12 @@ function Hooks_CSVReader() {
         
   }
 
+  const _handleDropDown = (e, value) => {
+    console.log('current dropdown value ', e.target.value );
+
+
+  }
+
   const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
     fieldNames.forEach(element => {
         if(infoCSV.length) {
@@ -120,9 +130,9 @@ function Hooks_CSVReader() {
   }
 
   // useEffect(()=> {
-  //   console.log('getCSVfieldNames called');
-  //   getCSVfieldNames(infoCSV);
-  // }, [infoCSV] )
+  //   console.log('showing dropdownSelected ', dropdownSelected);
+  //   
+  // }, [dropdownSelected] )
 
   useEffect(() => {  
     console.log('scrubCSV called');
@@ -130,8 +140,25 @@ function Hooks_CSVReader() {
       scrubCSV(fieldsByIndex, infoCSV, fieldNames);   
   }, [infoCSV])
 
+  // const options = [
+  //   { key: 1, text: 'One', value: 1 },
+  //   { key: 2, text: 'Two', value: 2 },
+  //   { key: 3, text: 'Three', value: 3 },
+  // ]
+
+
   return (
     <div >
+
+    <Select
+      text = "Student first name"
+      options = {options}
+      fluid
+      selection
+     // value = {dropdownSelected}
+     // onChange = {(value) => addDropDownSelected(value)}
+    />
+
       <Container  >
         <CSVReader
           label = 'Hooks-Choose your CSV file'
@@ -155,21 +182,42 @@ function Hooks_CSVReader() {
             : null
         }
       
-      {fieldNames.length 
-        ? 
-        <Container>
-          <p>length is {fieldNames.length}</p>
-          
-          {fieldNames.map((item,id) => (
-              <li key = {id}>
-                {item}  
-              </li>
-          )          
-            )}
-        </Container>
-        : 
-          null           
-      }
+
+
+        {fieldNames.length 
+          ? 
+          <Container>
+            <p>length is {fieldNames.length}</p>
+            
+            
+            {fieldNames.map((item,id) => (
+                <li key = {id}>
+                  {item}  
+                </li>
+            )          
+              )}
+            
+              
+            <Grid columns = {2}>
+              <Grid.Column>
+                <Dropdown
+                  text = "Student first name"
+                  options = {[fieldNames]}
+                  value = {dropdownSelected}
+
+                />
+              </Grid.Column>
+            
+            
+            
+            </Grid>  
+
+          </Container>
+          : 
+            null           
+        }
+
+
       </div>
 
     </div>
