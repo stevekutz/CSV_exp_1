@@ -1,13 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container, Dropdown, Grid, Modal, Select} from 'semantic-ui-react';
+import {Button, Container, Dropdown, Grid, Modal, Select, GridColumn} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
-const options = [
-  { key: 1, text: 'One', value: 1 },
-  { key: 2, text: 'Two', value: 2 },
-  { key: 3, text: 'Three', value: 3 },
-]
 
  // const fieldsByIndex = {};
  // const fieldNames = ['label', 'country'];   
@@ -20,7 +15,10 @@ function Hooks_CSVReader() {
   const [fieldsByIndex, setFieldsByIndex] = useState({});
   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
   const [fieldNames, setFieldNames] = useState([]);
+
+  const [dropdownNames, setdropdownNames] = useState([]);
   const [dropdownSelected, addDropDownSelected] = useState(['default']);
+  const [value, setValue] = useState();
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -63,6 +61,7 @@ function Hooks_CSVReader() {
   }
 
   
+  
   const findFieldIndex = (arr, fieldName, fieldNames) => {
     if(arr.length) {
      
@@ -81,23 +80,28 @@ function Hooks_CSVReader() {
         
   }
 
-  const _handleDropDown = (e, value) => {
-    console.log('current dropdown value ', e.target.value );
-
+  const _handleDropDown = (e, data) => {
+    console.log(' $$$$$$ current dropdown data  is ', data);
+    setValue(data.value);
 
   }
 
-  const scrubCSV = (fieldsByIndex ,infoCSV, fieldNames ) => {
-    fieldNames.forEach(element => {
+  const scrubCSV = (fieldsByIndex, infoCSV, fieldNames ) => {
+    fieldNames.forEach( (element, index) => {
         if(infoCSV.length) {
          // console.log('current element is >> ', element);
          fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element, fieldNames); // works
-         
          // setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  }) // nooo
          // setFieldsByIndex( fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element)  ) // error on second run
            console.log('Scrub FBI   ',fieldsByIndex);
 
         }
+        fieldNames.map(element => {
+
+          return ( {key: index, text: element, value: element} )
+
+        });
+
     }); 
   }
   
@@ -129,22 +133,42 @@ function Hooks_CSVReader() {
        console.log('showData info >>> ', info);
   }
 
-  // useEffect(()=> {
-  //   console.log('showing dropdownSelected ', dropdownSelected);
-  //   
-  // }, [dropdownSelected] )
+  useEffect(()=> {
+    console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
+    
+  }, [dropdownNames] )
+
+
 
   useEffect(() => {  
     console.log('scrubCSV called');
     // console.log('getCSVfieldNames shows', fieldNames); 
-      scrubCSV(fieldsByIndex, infoCSV, fieldNames);   
+      scrubCSV(fieldsByIndex, infoCSV, fieldNames);       
+      
   }, [infoCSV])
 
-  // const options = [
-  //   { key: 1, text: 'One', value: 1 },
-  //   { key: 2, text: 'Two', value: 2 },
-  //   { key: 3, text: 'Three', value: 3 },
-  // ]
+  const options = [
+    { key: 1, text: 'One', value: 1 },
+    { key: 2, text: 'Two', value: 2 },
+    { key: 3, text: 'Three', value: 3 },
+  ]
+
+  const options2 = [
+    { key: 1, text: 'First', value: 'firsty' },
+    { key: 2, text: 'Second', value: 'secondy'},
+    { key: 3, text: 'Last', value: 'thirdy' },
+  ]
+
+/*
+    <Select
+      text = "Student first name"
+      options = {options}
+      fluid
+      selection
+     // value = {dropdownSelected}
+     // onChange = {(value) => addDropDownSelected(value)}
+    />
+*/
 
 
   return (
@@ -202,12 +226,16 @@ function Hooks_CSVReader() {
               <Grid.Column>
                 <Dropdown
                   text = "Student first name"
-                  options = {[fieldNames]}
-                  value = {dropdownSelected}
-
-                />
+                  options = {options2}
+                  fluid
+                  selection
+                  value = {value}
+                  onChange = {_handleDropDown}
+              />
               </Grid.Column>
-            
+              <Grid.Column>
+                <p> {value}</p>
+              </Grid.Column>
             
             
             </Grid>  
