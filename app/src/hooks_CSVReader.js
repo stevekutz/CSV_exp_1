@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container, Dropdown, Grid, Modal, Select, GridColumn} from 'semantic-ui-react';
+import {Button, Container, Dropdown, Grid, Label, Select, GridColumn} from 'semantic-ui-react';
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
@@ -18,7 +18,7 @@ function Hooks_CSVReader() {
 
   const [dropdownNames, setdropdownNames] = useState([]);
   const [dropdownSelected, addDropDownSelected] = useState(['default']);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -26,7 +26,7 @@ function Hooks_CSVReader() {
 
   // Default fields needed
   const [newDataRow, updateNewDataRow] = useState({
-    first_name: '',
+    first_name: '', // set this to CSV index that holds student first name
     last_name: '',
     school_id: USERschool_id,
     parent_id: FOUNDparent_id,
@@ -64,10 +64,6 @@ function Hooks_CSVReader() {
   
   const findFieldIndex = (arr, fieldName, fieldNames) => {
     if(arr.length) {
-     
-      // let titleBar = arr[0];
-      // console.log('titleBar is ', titleBar );
-      // setFieldNames(titleBar);
       console.log('fieldnames in CSV are: ', fieldNames);
       let currentIndex = null;
       console.log('current fieldName', fieldName);
@@ -82,6 +78,7 @@ function Hooks_CSVReader() {
 
   const _handleDropDown = (e, data) => {
     console.log(' $$$$$$ current dropdown data  is ', data);
+    console.log(' $$$$$$ curent key is at ', data.value)
     setValue(data.value);
 
   }
@@ -91,29 +88,20 @@ function Hooks_CSVReader() {
         if(infoCSV.length) {
          // console.log('current element is >> ', element);
          fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element, fieldNames); // works
-         // setFieldsByIndex({...fieldsByIndex , [element] : findFieldIndex(infoCSV, element)  }) // nooo
+         // setFieldsByIndex({...fieldsByIndex , [element]: findFieldIndex(infoCSV, element, fieldNames)  }) // nooo
          // setFieldsByIndex( fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element)  ) // error on second run
            console.log('Scrub FBI   ',fieldsByIndex);
 
         }
     
     }); 
-    //  const [dropdownNames, setdropdownNames] = useState([]);
-
-    // const names =  fieldNames.map( (item, index) => {
-    //   return {key: index, text: item, value: item}
-    // })   
-
-    // setdropdownNames(names)
-
-    setdropdownNames(fieldNames.map( (item, index) => {
-       return {key: index, text: item, value: item}
-     }))
+  
+    setdropdownNames(
+      fieldNames.map( (item, index) => {
+       return {key: index, text: item, value: index}
+      }))
 
   }
-
-  
-  
 
   const addFieldName = info => {
        console.log('showData info >>> ', info);
@@ -189,6 +177,18 @@ function Hooks_CSVReader() {
               
             <Grid columns = {2}>
               <Grid.Column>
+                <Label> {value}</Label>
+                  <Dropdown
+                    text = "Student first name"
+                    options = {dropdownNames}
+                    fluid
+                    selection
+                    value = {value}
+                    onChange = {_handleDropDown}
+                />
+              </Grid.Column>
+              <Grid.Column>
+              <Label> {value}</Label>
                 <Dropdown
                   text = "Student first name"
                   options = {dropdownNames}
@@ -196,10 +196,7 @@ function Hooks_CSVReader() {
                   selection
                   value = {value}
                   onChange = {_handleDropDown}
-              />
-              </Grid.Column>
-              <Grid.Column>
-                <p> {value}</p>
+                />
               </Grid.Column>
             
             

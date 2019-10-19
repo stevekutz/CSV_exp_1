@@ -11,7 +11,7 @@ function App() {
   
   return (
     <div style = {{border: '4px solid purple', display: 'flex', flexDirection: 'column'}}>
-      <div style = {{border: '1px solid seagreen', width: '50%'}}>
+      <div style = {{border: '1px solid seagreen', width: '80%', margin: '0 auto'}}>
         <Hooks_CSVReader />
         <State_CSVReader />
         
