@@ -96,46 +96,32 @@ function Hooks_CSVReader() {
            console.log('Scrub FBI   ',fieldsByIndex);
 
         }
-        fieldNames.map(element => {
-
-          return ( {key: index, text: element, value: element} )
-
-        });
-
+    
     }); 
+    //  const [dropdownNames, setdropdownNames] = useState([]);
+
+    // const names =  fieldNames.map( (item, index) => {
+    //   return {key: index, text: item, value: item}
+    // })   
+
+    // setdropdownNames(names)
+
+    setdropdownNames(fieldNames.map( (item, index) => {
+       return {key: index, text: item, value: item}
+     }))
+
   }
+
   
-  // const newStudentPayload = {
-  //   ...studentInfo,
-  //   field_trip_id: match.params.id,
-  //   school_id: user.school_id
-  // };
-
-  // const { first_name, last_name, field_trip_id, school_id, parent_id } = req.body;  
-  // const [newDataRow, updateNewDataRow] 
-
-
-  // // const [newData, addNewData] = useState({});
-
-  // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
-  //   for(let i = 1; i < infoCSV.length; i++) {
-  //     infoCSV[i]
-
-  //   }
-
-
-  // }
-
-  //showData(infoCSV);
   
 
-  const showData = info => {
+  const addFieldName = info => {
        console.log('showData info >>> ', info);
   }
 
   useEffect(()=> {
     console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
-    
+    // console.log('!!!!!!!!!!!!  showing names ', names);
   }, [dropdownNames] )
 
 
@@ -154,34 +140,13 @@ function Hooks_CSVReader() {
   ]
 
   const options2 = [
-    { key: 1, text: 'First', value: 'firsty' },
-    { key: 2, text: 'Second', value: 'secondy'},
-    { key: 3, text: 'Last', value: 'thirdy' },
+    { key: 0, text: 'First', value: 'firsty' },
+    { key: 1, text: 'Second', value: 'secondy'},
+    { key: 2, text: 'Last', value: 'thirdy' },
   ]
-
-/*
-    <Select
-      text = "Student first name"
-      options = {options}
-      fluid
-      selection
-     // value = {dropdownSelected}
-     // onChange = {(value) => addDropDownSelected(value)}
-    />
-*/
-
 
   return (
     <div >
-
-    <Select
-      text = "Student first name"
-      options = {options}
-      fluid
-      selection
-     // value = {dropdownSelected}
-     // onChange = {(value) => addDropDownSelected(value)}
-    />
 
       <Container  >
         <CSVReader
@@ -226,7 +191,7 @@ function Hooks_CSVReader() {
               <Grid.Column>
                 <Dropdown
                   text = "Student first name"
-                  options = {options2}
+                  options = {dropdownNames}
                   fluid
                   selection
                   value = {value}
@@ -253,3 +218,31 @@ function Hooks_CSVReader() {
 }
 
 export default Hooks_CSVReader;
+
+
+/*
+  
+  // const newStudentPayload = {
+  //   ...studentInfo,
+  //   field_trip_id: match.params.id,
+  //   school_id: user.school_id
+  // };
+
+  // const { first_name, last_name, field_trip_id, school_id, parent_id } = req.body;  
+  // const [newDataRow, updateNewDataRow] 
+
+
+  // // const [newData, addNewData] = useState({});
+
+  // const _handle_CSV_Row = (fieldsByIndex, infoCSV) => {
+  //   for(let i = 1; i < infoCSV.length; i++) {
+  //     infoCSV[i]
+
+  //   }
+
+
+  // }
+
+  //showData(infoCSV);
+  
+*/
