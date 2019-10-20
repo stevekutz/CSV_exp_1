@@ -16,8 +16,8 @@ function Hooks_CSVReader() {
   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
   const [fieldNames, setFieldNames] = useState([]);
 
-  const [dropdownNames, setdropdownNames] = useState([{key: '', text: '', value: ''}]);
-  const [dropdownSelected, addDropDownSelected] = useState(['default']);
+  const [dropdownNames, setdropdownNames] = useState([]);
+  const [dropdownSelected, addDropDownSelected] = useState([{key: '', text: '', value: ''}]);
   const [value, setValue] = useState(0);
 
   // fields that need to be gotten
@@ -25,7 +25,7 @@ function Hooks_CSVReader() {
   const FOUNDparent_id = "8b4eb7b4-893c-4bb2-8bbe-b75c4223854e";
 
   // Default fields needed
-  const [matchCSV, updatematchCSV] = useState({
+  const [matchCSV, updateMatchCSV] = useState({
     index_student_first_name: '', // set this to CSV index that holds student first name
     index_student_last_name: '',
     index_parent_first_name: '', // set this to CSV index that holds student first name
@@ -96,6 +96,10 @@ function Hooks_CSVReader() {
     console.log(' $$$$$$ curent key is at ', data.value)
     setValue(data.value);
 
+    updateMatchCSV({
+      ...matchCSV,
+      [data.name]: data.value
+    })
   }
 
   const scrubCSV = (fieldsByIndex, infoCSV, fieldNames ) => {
@@ -118,14 +122,10 @@ function Hooks_CSVReader() {
 
   }
 
-  const addFieldName = info => {
-       console.log('showData info >>> ', info);
-  }
-
   useEffect(()=> {
     console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
-    // console.log('!!!!!!!!!!!!  showing names ', names);
-  }, [dropdownNames] )
+    console.log('################  showing names ', matchCSV);
+  }, [dropdownNames, matchCSV] )
 
 
 
@@ -181,23 +181,25 @@ function Hooks_CSVReader() {
        
         <Grid columns = {2} divided style = {{width: '50%'}}>
           <Grid.Column>
-            <Label> Student First Name: {value}</Label>
+            <Label> Student First Name: {matchCSV.index_student_first_name}</Label>
             <Dropdown
-            text = "Student first name"
+            // text = "Student first name"
             options = {dropdownNames}
             fluid
             selection
+            name = "index_student_first_name"
             value = {value}
             onChange = {_handleDropDown}
             />
           </Grid.Column>
           <Grid.Column>
-            <Label> Student Last Name {value}</Label>
+            <Label> Student Last Name {matchCSV.index_student_last_name}</Label>
             <Dropdown
-            text = "Student first name"
+            // text = "Student first name"
             options = {dropdownNames}
             fluid
             selection
+            name = "index_student_last_name"
             value = {value}
             onChange = {_handleDropDown}
             />
