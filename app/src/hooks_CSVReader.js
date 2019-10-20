@@ -100,6 +100,9 @@ function Hooks_CSVReader() {
       ...matchCSV,
       [data.name]: data.value
     })
+
+    setdropdownNames([...dropdownNames], dropdownNames[data.value].disabled = true);
+
   }
 
   const scrubCSV = (fieldsByIndex, infoCSV, fieldNames ) => {
@@ -117,7 +120,7 @@ function Hooks_CSVReader() {
   
     setdropdownNames(
       fieldNames.map( (item, index) => {
-       return {key: index, text: item, value: index}
+       return {key: index, text: item, value: index, disabled: false}
       }))
 
   }
