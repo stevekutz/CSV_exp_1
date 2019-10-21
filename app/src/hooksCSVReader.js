@@ -11,7 +11,8 @@ import Loader from 'react-loader-spinner';
 
 function HooksCSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
-  const [headerToggle, setHeaderToggle] = useState({ checked: true, label: 'Header Present'});
+  // const [headerToggle, setHeaderToggle] = useState({ checked: true});
+  const [headerToggle, setHeaderToggle] = useState(true);
   const [loadingData, setLoading] = useState(false);
   // const [fieldsByIndex, setFieldsByIndex] = useState({});
   // const [fieldNames, setFieldNames] = useState(['label', 'country']);
@@ -99,24 +100,45 @@ function HooksCSVReader() {
     
     const createData = () => {
 
-      updateNewDataRow(
-        {
-          student_first_name: '', 
-          student_last_name: '',
-          // parent_first_name: '', 
-          // parent_last_name: '',
-          // parent_email: '',
-          // parent_phone: '',
-          school_id: USERschool_id,
-          parent_id: FOUNDparent_id,
+      let startDataIndex = 1;
+
+      if(infoCSV.length) {
+
+        headerToggle.checked ? startDataIndex = 1 : startDataIndex = 0;
+
+        for(startDataIndex; startDataIndex <= infoCSV.length; startDataIndex++) {
+          if(infoCSV[startDataIndex]){
+            console.log('headerToggle is', headerToggle.checked);
+            console.log('startDataIndex is ', startDataIndex);
+            console.log('infoCSV length is', infoCSV.length )
+            console.log('INSIDE we got InfoCSV', infoCSV);
+            console.log('INSIDE we got matchCSV', matchCSV.index_student_last_name);
+            console.log('INSIDE stulast is ', infoCSV[1][1]);
+
+            let newRow = 
+              {
+                student_first_name: infoCSV[startDataIndex][matchCSV.index_student_first_name], 
+                student_last_name: infoCSV[startDataIndex][matchCSV.index_student_last_name],
+                // parent_first_name: '', 
+                // parent_last_name: '',
+                // parent_email: '',
+                // parent_phone: '',
+                school_id: USERschool_id,
+                parent_id: FOUNDparent_id,
+              }
+              console.log('WE GOT A NEW ROW', newRow);
+              
+         
+
+          }
+
         }
 
 
-      )
 
 
+      }
     }
-    
     
     useEffect(()=> {
       console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
@@ -143,10 +165,9 @@ function HooksCSVReader() {
   const alignStyles = {width: '50%', margin: '5px auto', padding: '5px', display: 'flex'}                    
   const cardStyles = {border: '1px solid deeppink', color: 'dodgerblue', ...alignStyles}
   
-  const handleHeader = (e, data) => {
-    console.log('CHECKBOX data',  data);
-    setHeaderToggle(data.checked);
-
+  const handleHeader = () => {
+    // console.log('CHECKBOX data',  data);
+    setHeaderToggle(!headerToggle);
   }
 
   return (
@@ -162,17 +183,14 @@ function HooksCSVReader() {
         inputType = "color"
         inputValue="#e66465"
       />
-      <div style = {{display: 'flex', justifyContent: 'space-evenly', padding: '10px'}}>
+      <div style = {{display: 'flex', justifyContent: 'space-evenly', padding: '10px', alignItems: 'center'}}>
         <Button  size = 'mini' color='red' onClick = {resetDropDown} > reset dropDowns </Button>
-        
-        <Checkbox slider = {true} onChange = {handleHeader} label = "Header Present" checked = {headerToggle.checked}/>
-        <Button  size = 'mini' color='green'  > Load CSV </Button>
-      
-      
+          <Label style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p>Header Present</p>  : <p>NO Header</p>}</Label>
+          <Checkbox  slider onChange = {handleHeader}  checked = {headerToggle} />      
+        <Button  size = 'mini' color='green' onClick = {createData} > Load CSV </Button>      
       </div>
       </Container>
-    
-      
+          
       <div>
       
         {loadingData 
@@ -199,10 +217,10 @@ function HooksCSVReader() {
               </Card>
             ))}  
 
-            </Container>
-            : 
+          </Container>
+          : 
             null           
-          }
+        }
         
         
         </div>
@@ -241,4 +259,4 @@ function HooksCSVReader() {
     
     //     }
     
-    // }); 
+    // }) 
