@@ -3,24 +3,13 @@ import {Button, Card, Checkbox, Container, Dropdown, Label} from 'semantic-ui-re
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
-
- // const fieldsByIndex = {};
- // const fieldNames = ['label', 'country'];   
- //    const [fieldNames, setFieldNames] = useState(['StudentLastName',	'StudentFirstName',	
- // 'Studentemail', 'ParentLastName',	'ParentFirstName', 'ParentPhone',	'Parentemail']);
-
 function HooksCSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
   // const [headerToggle, setHeaderToggle] = useState({ checked: true});
   const [headerToggle, setHeaderToggle] = useState(true);
   const [loadingData, setLoading] = useState(false);
-  // const [fieldsByIndex, setFieldsByIndex] = useState({});
-  // const [fieldNames, setFieldNames] = useState(['label', 'country']);
   const [fieldNames, setFieldNames] = useState([]);
-
   const [dropdownNames, setdropdownNames] = useState([]);
-  //const [dropdownSelected, addDropDownSelected] = useState([{key: '', text: '', value: ''}]);
-  //const [value, setValue] = useState(0);
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -36,11 +25,6 @@ function HooksCSVReader() {
     index_parent_phone: '',
   });
 
-  // 
-  
-  
-  
-  
   const handleData = (data) => {
     resetDropDown();
     setInfoCSV([]);
@@ -104,7 +88,7 @@ function HooksCSVReader() {
 
       if(infoCSV.length) {
 
-        headerToggle.checked ? startDataIndex = 1 : startDataIndex = 0;
+        headerToggle ? startDataIndex = 1 : startDataIndex = 0;
 
         for(startDataIndex; startDataIndex <= infoCSV.length; startDataIndex++) {
           if(infoCSV[startDataIndex]){
@@ -115,28 +99,24 @@ function HooksCSVReader() {
             console.log('INSIDE we got matchCSV', matchCSV.index_student_last_name);
             console.log('INSIDE stulast is ', infoCSV[1][1]);
 
-            let newRow = 
-              {
-                student_first_name: infoCSV[startDataIndex][matchCSV.index_student_first_name], 
-                student_last_name: infoCSV[startDataIndex][matchCSV.index_student_last_name],
-                // parent_first_name: '', 
-                // parent_last_name: '',
-                // parent_email: '',
-                // parent_phone: '',
-                school_id: USERschool_id,
-                parent_id: FOUNDparent_id,
-              }
-              console.log('WE GOT A NEW ROW', newRow);
-              
-         
-
+            if(infoCSV[startDataIndex][matchCSV.index_student_first_name] !== undefined && 
+              infoCSV[startDataIndex][matchCSV.index_student_last_name] !== undefined){
+                
+                let newRow = 
+                  {
+                    student_first_name: infoCSV[startDataIndex][matchCSV.index_student_first_name], 
+                    student_last_name: infoCSV[startDataIndex][matchCSV.index_student_last_name],
+                    // parent_first_name: '', 
+                    // parent_last_name: '',
+                    // parent_email: '',
+                    // parent_phone: '',
+                    school_id: USERschool_id,
+                    parent_id: FOUNDparent_id,
+                  }
+                console.log('WE GOT A NEW ROW', newRow);
+            }
           }
-
         }
-
-
-
-
       }
     }
     
@@ -149,18 +129,14 @@ function HooksCSVReader() {
     
     
     useEffect(() => {  
-    console.log('InfoCSV is ', infoCSV);
-
-    // scrubCSV(fieldsByIndex, infoCSV, fieldNames);         
-    scrubCSV(fieldNames);       
-      
+    console.log('InfoCSV is ', infoCSV);        
+    scrubCSV(fieldNames);             
   }, [infoCSV, fieldNames])
 
   const resetDropDown = () => {
     setdropdownNames([]);
     setFieldNames([]);
   }
-
 
   const alignStyles = {width: '50%', margin: '5px auto', padding: '5px', display: 'flex'}                    
   const cardStyles = {border: '1px solid deeppink', color: 'dodgerblue', ...alignStyles}
