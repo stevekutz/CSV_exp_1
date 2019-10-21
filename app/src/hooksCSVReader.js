@@ -3,6 +3,8 @@ import {Button, Card, Checkbox, Container, Dropdown, Label} from 'semantic-ui-re
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
+const addThisData = [];
+
 function HooksCSVReader() {
   const [infoCSV, setInfoCSV] = useState([]);
   // const [headerToggle, setHeaderToggle] = useState({ checked: true});
@@ -10,6 +12,11 @@ function HooksCSVReader() {
   const [loadingData, setLoading] = useState(false);
   const [fieldNames, setFieldNames] = useState([]);
   const [dropdownNames, setdropdownNames] = useState([]);
+  const [addedCSVdata, updateAddedCSVdata] = useState([]);
+  const [dataArr, setDataArr] = useState([{}]);
+
+  // 
+  // const addThisData = [];
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -67,18 +74,6 @@ function HooksCSVReader() {
           }))    
     }
     
-    const [newDataRow, updateNewDataRow] = useState({
-      student_first_name: '', 
-      student_last_name: '',
-      // parent_first_name: '', 
-      // parent_last_name: '',
-      // parent_email: '',
-      // parent_phone: '',
-      school_id: USERschool_id,
-      parent_id: FOUNDparent_id,
-    });
-  
-  
     const school_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
     const parent_id = "8b4eb7b4-893c-4bb2-8bbe-b75c4223854e";
     
@@ -114,19 +109,31 @@ function HooksCSVReader() {
                     parent_id: FOUNDparent_id,
                   }
                 console.log('WE GOT A NEW ROW', newRow);
+                //updateAddedCSVdata([...addedCSVdata, newRow]); // only updates to last item
+                // updateAddedCSVdata(addedCSVdata.concat(newRow));   only updates last item
+                // updateAddedCSVdata([[...addedCSVdata], newRow]);
+                addedCSVdata.push(newRow);
+                
+               setDataArr(newRow); // without this, no render below !
             }
+
+           
           }
         }
       }
+      console.log('ALL added CSV data is now', addedCSVdata);
     }
     
+    // just to verify state changes
     useEffect(()=> {
       console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
       console.log('################  showing names ', matchCSV);
       console.log('headerToggle',  headerToggle);
-    }, [dropdownNames, matchCSV, headerToggle] )
-    
-    
+      console.log('addedCSV data', addedCSVdata);
+     // console.log('dataArr is', dataArr); 
+   
+    }, [dropdownNames, matchCSV, headerToggle ])
+
     
     useEffect(() => {  
     console.log('InfoCSV is ', infoCSV);        
@@ -198,7 +205,12 @@ function HooksCSVReader() {
             null           
         }
         
-        
+        {addedCSVdata.map((item, index) => (
+          <div key = {index}>
+            <Label color = 'blue' style = {{margin: '5px'}}>{item.student_first_name} {item.student_last_name} </Label>
+          </div>
+        ))}
+
         </div>
       
       </div>
