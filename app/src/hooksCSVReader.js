@@ -13,10 +13,6 @@ function HooksCSVReader() {
   const [fieldNames, setFieldNames] = useState([]);
   const [dropdownNames, setdropdownNames] = useState([]);
   const [addedCSVdata, updateAddedCSVdata] = useState([]);
-  const [dataArr, setDataArr] = useState([{}]);
-
-  // 
-  // const addThisData = [];
 
   // fields that need to be gotten
   const USERschool_id = "4187269f-d1fa-41fe-ad34-2e7d74a9031a";
@@ -113,8 +109,7 @@ function HooksCSVReader() {
                 // updateAddedCSVdata(addedCSVdata.concat(newRow));   only updates last item
                 // updateAddedCSVdata([[...addedCSVdata], newRow]);
                 addedCSVdata.push(newRow);
-                
-               setDataArr(newRow); // without this, no render below !
+                updateAddedCSVdata([...addedCSVdata]);
             }
 
            
@@ -129,20 +124,20 @@ function HooksCSVReader() {
       console.log('!!!!!!!!!!!!  showing dropdownNames ', dropdownNames);
       console.log('################  showing names ', matchCSV);
       console.log('headerToggle',  headerToggle);
-      console.log('addedCSV data', addedCSVdata);
-     // console.log('dataArr is', dataArr); 
-   
-    }, [dropdownNames, matchCSV, headerToggle ])
+      console.log('addedCSV data', addedCSVdata); 
+    }, [dropdownNames, matchCSV, headerToggle, addedCSVdata ])
 
     
     useEffect(() => {  
-    console.log('InfoCSV is ', infoCSV);        
-    scrubCSV(fieldNames);             
-  }, [infoCSV, fieldNames])
+      console.log('InfoCSV is ', infoCSV);        
+      scrubCSV(fieldNames);             
+    }, [infoCSV, fieldNames])
 
   const resetDropDown = () => {
     setdropdownNames([]);
     setFieldNames([]);
+    updateAddedCSVdata([]);
+    
   }
 
   const alignStyles = {width: '50%', margin: '5px auto', padding: '5px', display: 'flex'}                    
@@ -219,32 +214,3 @@ function HooksCSVReader() {
     
     export default HooksCSVReader;
 
-
-
-
-      
-  // const findFieldIndex = (arr, fieldName, fieldNames) => {
-    //   if(arr.length) {
-      //     console.log('fieldnames in CSV are: ', fieldNames);
-      //     let currentIndex = null;
-      //     console.log('current fieldName', fieldName);
-      //  //   currentIndex = titleBar.indexOf(`${fieldName}`);
-      //     currentIndex = fieldNames.indexOf(`${fieldName}`);
-      //     console.log('curentIndex ', currentIndex);
-      //     return currentIndex;
-      //     }
-      //   return -1;
-      
-      // }
-      
-          // fieldNames.forEach( (element, index) => {
-            //     if(infoCSV.length) {
-              //      // console.log('current element is >> ', element);
-    //      fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element, fieldNames); // works
-    //      // setFieldsByIndex({...fieldsByIndex , [element]: findFieldIndex(infoCSV, element, fieldNames)  }) // nooo
-    //      // setFieldsByIndex( fieldsByIndex[`${element}`] = findFieldIndex(infoCSV, element)  ) // error on second run
-    //        console.log('Scrub FBI   ',fieldsByIndex);
-    
-    //     }
-    
-    // }) 
