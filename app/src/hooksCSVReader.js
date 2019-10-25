@@ -3,9 +3,8 @@ import {Button, Card, Checkbox, Container, Dropdown, Label} from 'semantic-ui-re
 import CSVReader from 'react-csv-reader';
 import Loader from 'react-loader-spinner';
 
-const addThisData = [];
 
-function HooksCSVReader() {
+function HooksCSVReader({closeModal}) {
   const [infoCSV, setInfoCSV] = useState([]);
   // const [headerToggle, setHeaderToggle] = useState({ checked: true});
   const [headerToggle, setHeaderToggle] = useState(true);
@@ -83,12 +82,12 @@ function HooksCSVReader() {
 
         for(startDataIndex; startDataIndex <= infoCSV.length; startDataIndex++) {
           if(infoCSV[startDataIndex]){
-            console.log('headerToggle is', headerToggle.checked);
-            console.log('startDataIndex is ', startDataIndex);
-            console.log('infoCSV length is', infoCSV.length )
-            console.log('INSIDE we got InfoCSV', infoCSV);
-            console.log('INSIDE we got matchCSV', matchCSV.index_student_last_name);
-            console.log('INSIDE stulast is ', infoCSV[1][1]);
+            // console.log('headerToggle is', headerToggle.checked);
+            // console.log('startDataIndex is ', startDataIndex);
+            // console.log('infoCSV length is', infoCSV.length )
+            // console.log('INSIDE we got InfoCSV', infoCSV);
+            // console.log('INSIDE we got matchCSV', matchCSV.index_student_last_name);
+            // console.log('INSIDE stulast is ', infoCSV[1][1]);
 
             if(infoCSV[startDataIndex][matchCSV.index_student_first_name] !== undefined && 
               infoCSV[startDataIndex][matchCSV.index_student_last_name] !== undefined){
@@ -180,7 +179,7 @@ function HooksCSVReader() {
         
         {fieldNames.length 
           ? 
-          <Container style = {{border: '1px solid green', display: 'flex', width: '60%', flexWrap: 'wrap'}}>
+          <Container style = {{border: '1px solid green', display: 'flex', width: '80%', flexWrap: 'wrap'}}>
                   
             {Object.keys(matchCSV).map((item,id) => (
               <Card key = {id} style = {cardStyles}>
@@ -205,7 +204,7 @@ function HooksCSVReader() {
             <Label color = 'blue' style = {{margin: '5px'}}>{item.student_first_name} {item.student_last_name} </Label>
           </div>
         ))}
-
+        <Button onClick = {closeModal}> close modal</Button>  
         </div>
       
       </div>
