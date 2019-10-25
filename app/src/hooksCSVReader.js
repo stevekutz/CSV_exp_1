@@ -199,12 +199,24 @@ function HooksCSVReader({closeModal}) {
             null           
         }
         
-        {addedCSVdata.map((item, index) => (
+        { addedCSVdata.length ?
+
+          addedCSVdata.map((item, index) => (
           <div key = {index}>
             <Label color = 'blue' style = {{margin: '5px'}}>{item.student_first_name} {item.student_last_name} </Label>
+            {index === 0 ? 
+              <Container textAlign = 'right'>
+                <Button onClick = {closeModal}> Close Modal  </Button> 
+              </Container>
+              : null}
+            
           </div>
-        ))}
-        <Button onClick = {closeModal}> close modal</Button>  
+
+          
+          ))
+          :
+          null
+        }
         </div>
       
       </div>
