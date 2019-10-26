@@ -82,12 +82,6 @@ function HooksCSVReader({closeModal}) {
 
         for(startDataIndex; startDataIndex <= infoCSV.length; startDataIndex++) {
           if(infoCSV[startDataIndex]){
-            // console.log('headerToggle is', headerToggle.checked);
-            // console.log('startDataIndex is ', startDataIndex);
-            // console.log('infoCSV length is', infoCSV.length )
-            // console.log('INSIDE we got InfoCSV', infoCSV);
-            // console.log('INSIDE we got matchCSV', matchCSV.index_student_last_name);
-            // console.log('INSIDE stulast is ', infoCSV[1][1]);
 
             if(infoCSV[startDataIndex][matchCSV.index_student_first_name] !== undefined && 
               infoCSV[startDataIndex][matchCSV.index_student_last_name] !== undefined){
@@ -173,7 +167,7 @@ function HooksCSVReader({closeModal}) {
         {loadingData 
           ? 
           <Loader style = {{border: '1px solid blue', display: 'flex', justifyContent: 'center'}}
-          width = {25} height= {25} color = 'purple' type = 'TailSpin'/> 
+            width = {25} height= {25} color = 'purple' type = 'TailSpin'/> 
           : null
         }
         
@@ -199,23 +193,23 @@ function HooksCSVReader({closeModal}) {
             null           
         }
         
-        { addedCSVdata.length ?
-
-          addedCSVdata.map((item, index) => (
-          <div key = {index}>
-            <Label color = 'blue' style = {{margin: '5px'}}>{item.student_first_name} {item.student_last_name} </Label>
-            {index === 0 ? 
-              <Container textAlign = 'right'>
-                <Button onClick = {closeModal}> Close Modal  </Button> 
-              </Container>
-              : null}
-            
-          </div>
-
+        { addedCSVdata.length 
+          ?
           
+          addedCSVdata.map((item, index) => (
+            <div key = {index}>
+
+            {index === 0 
+              ? <div  style = {{display: 'flex', justifyContent: 'flex-end', margin: '4px'}}  textAlign = 'right'>
+                <Button  color = 'green' onClick = {closeModal}> Load into Student List  </Button> 
+              </div>
+              : null}
+
+              <Label color = 'blue' style = {{margin: '5px'}}>{item.student_first_name} {item.student_last_name} </Label>
+            
+             </div>       
           ))
-          :
-          null
+          : null
         }
         </div>
       
