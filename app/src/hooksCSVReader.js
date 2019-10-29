@@ -135,6 +135,8 @@ function HooksCSVReader({closeModal}) {
 
   const alignStyles = {width: '50%', margin: '5px auto', padding: '5px', display: 'flex'}                    
   const cardStyles = {border: '1px solid deeppink', color: 'dodgerblue', ...alignStyles}
+  // toggleStyles = 
+
   
   const handleHeader = () => {
     // console.log('CHECKBOX data',  data);
@@ -156,7 +158,7 @@ function HooksCSVReader({closeModal}) {
       />
       <div style = {{display: 'flex', justifyContent: 'space-evenly', padding: '10px', alignItems: 'center'}}>
         <Button  size = 'mini' color='red' onClick = {resetDropDown} > reset dropDowns </Button>
-          <Label color = 'blue' style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p>Header Present</p>  : <p>NO Header</p>}</Label>
+          <Label style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p style = {{color: 'royalblue'}}>Header Present</p>  : <p style = {{color: 'darkgray'}}>NO Header</p>}</Label>
           <Checkbox  toggle onChange = {handleHeader}  checked = {headerToggle} />      
         <Button  size = 'mini' color='green' onClick = {createData} > Load CSV </Button>      
       </div>
