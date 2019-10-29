@@ -156,8 +156,8 @@ function HooksCSVReader({closeModal}) {
       />
       <div style = {{display: 'flex', justifyContent: 'space-evenly', padding: '10px', alignItems: 'center'}}>
         <Button  size = 'mini' color='red' onClick = {resetDropDown} > reset dropDowns </Button>
-          <Label style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p>Header Present</p>  : <p>NO Header</p>}</Label>
-          <Checkbox  slider onChange = {handleHeader}  checked = {headerToggle} />      
+          <Label color = 'blue' style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p>Header Present</p>  : <p>NO Header</p>}</Label>
+          <Checkbox  toggle onChange = {handleHeader}  checked = {headerToggle} />      
         <Button  size = 'mini' color='green' onClick = {createData} > Load CSV </Button>      
       </div>
       </Container>
