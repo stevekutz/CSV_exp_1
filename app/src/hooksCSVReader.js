@@ -135,8 +135,9 @@ function HooksCSVReader({closeModal}) {
 
   const alignStyles = {width: '50%', margin: '5px auto', padding: '5px', display: 'flex'}                    
   const cardStyles = {border: '1px solid deeppink', color: 'dodgerblue', ...alignStyles}
-  // toggleStyles = 
-
+  const toggleStyles = {width: '20%', display: 'flex', justifyContent: 'space-evenly'}
+ 
+// <Label  style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p style = {{color: 'royalblue'}}>Header Present</p>  : <p style = {{color: 'darkgray'}}>NO Header</p>}</Label>
   
   const handleHeader = () => {
     // console.log('CHECKBOX data',  data);
@@ -158,7 +159,10 @@ function HooksCSVReader({closeModal}) {
       />
       <div style = {{display: 'flex', justifyContent: 'space-evenly', padding: '10px', alignItems: 'center'}}>
         <Button  size = 'mini' color='red' onClick = {resetDropDown} > reset dropDowns </Button>
-          <Label style = {{width: '20%', display: 'flex', justifyContent: 'space-evenly'}}> {headerToggle ?  <p style = {{color: 'royalblue'}}>Header Present</p>  : <p style = {{color: 'darkgray'}}>NO Header</p>}</Label>
+          {headerToggle
+          ? <Label color = 'blue' style = {toggleStyles}> <p style = {{color: 'white'}}>Header Present</p> </Label>
+          : <Label color = 'gray' style = {toggleStyles}> <p style = {{color: 'darkgray'}}>No Header</p> </Label>
+          }
           <Checkbox  toggle onChange = {handleHeader}  checked = {headerToggle} />      
         <Button  size = 'mini' color='green' onClick = {createData} > Load CSV </Button>      
       </div>
